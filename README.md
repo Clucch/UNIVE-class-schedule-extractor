@@ -1,1 +1,1 @@
-# UNIVE-class-schedule-extractor
+# Unive Class Schedule Extractor

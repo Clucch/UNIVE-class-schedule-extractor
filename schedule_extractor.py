@@ -1,7 +1,7 @@
 """
 Author: Clucch
 
-Last Updated: 13/08/2023
+Created on: 13/08/2023
 
 Description: Retrieves class schedules from UNIVE, 
 extracting dates along with their corresponding hours, 

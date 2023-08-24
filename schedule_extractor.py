@@ -153,11 +153,17 @@ if __name__ == '__main__':
 
     try:
         classSchedule = fetchRawSchedule(URL, selectedPeriod, 'A' <= userSurname[0].upper() <= 'L')
-        
-        with open(outputPath + "schedule.json", "w") as json_file:
-            json.dump(classSchedule, json_file)
 
-        print(Fore.GREEN + "Done! The output file is located at " + outputPath + "schedule.json")
+        if outputPath:
+            if outputPath[-1] != '/':
+                outputPath += '/'
+        
+        filePath = outputPath + "schedule.json"
+
+        with open(outputPath + "schedule.json", "w") as json_file:
+            json.dump(classSchedule, json_file, indent=4)
+
+        print(Fore.GREEN + "Done! The output file is located at " + filePath.replace('/', '\\'))
         print(Fore.WHITE)
 
     except Exception as e:

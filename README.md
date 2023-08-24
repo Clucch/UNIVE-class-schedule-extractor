@@ -14,7 +14,7 @@ The schedule is presented in a non-ideal format on the university's website, mak
 
 ## Overview
 
-Managing a university class schedule can be cumbersome, especially when the schedule is not presented in a user-friendly format on the university's website. This repository provides a solution by offering two Python scripts that automate the process:
+Managing a university class schedule can be tricky, especially when the schedule is not presented in a user-friendly (or automation-friendly) format on the university's website. This repository provides a solution by offering two Python scripts that automate the process:
 
 1. **Class Schedule Extraction:** This CLI script (`schedule_extractor.py`) extracts the class schedule from the university's website and saves it in a structured JSON format. The JSON format makes it easier to manipulate and import the schedule data into other applications.
 

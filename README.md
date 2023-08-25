@@ -33,13 +33,13 @@ If you encounter problems with different ones, feel free to open an issue or eve
 1. Clone this repository to your local machine using the following command:
 
    ``` bash
-   git clone https://github.com/Clucch/UNIVE-class-schedule-extractor.git
+   git clone https://github.com/Clucch/unive-class-schedule-extractor.git
    ``` 
 
 2. Navigate to the repository's directory:
 
    ``` bash
-   cd UNIVE-class-schedule-extractor
+   cd unive-class-schedule-extractor
    ``` 
 
 3. Install the required packages by using the following command:

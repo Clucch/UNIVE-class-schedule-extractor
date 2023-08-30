@@ -72,7 +72,7 @@ def checkIfClassExists(className):
         return response_json["id"]
 
 # Function to add an entry to the Notion database
-def addClassToNotion(className, classId, startDate, startTime, finishDate, finishTime):
+def addClassToNotion(className, classId, startDate, startTime, finishDate, finishTime, classClassroom):
 
     startDatetime = f'{startDate}T{startTime}+02:00'
     finishDatetime = f'{finishDate}T{finishTime}+02:00'
@@ -100,6 +100,16 @@ def addClassToNotion(className, classId, startDate, startTime, finishDate, finis
             },
             "Class": {
                 "relation": [{"id": classId}]
+            },
+            "Classroom": {
+                "rich_text": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": classClassroom,
+                    }
+                }
+            ]
             }
         }
 }
@@ -129,14 +139,17 @@ if __name__ == '__main__':
                 date = datetime.strptime(date, '%d/%m/%Y')
                 date = date.strftime('%Y-%m-%d')
 
-                for hour, className in schedule.items():
+                for hour, classDetails in schedule.items():
+
+                    className = classDetails["Course"]
+                    classClassroom = classDetails["Classroom"]
                     
                     start_time = hour.split('-')[0].strip()
                     finish_time = hour.split('-')[1].strip()
 
                     classId = checkIfClassExists(className)
 
-                    addClassToNotion(className, classId, date, start_time, date, finish_time)
+                    addClassToNotion(className, classId, date, start_time, date, finish_time, classClassroom)
         
         print("Schedule successfully added to Notion!")
 

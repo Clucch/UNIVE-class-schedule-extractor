@@ -31,16 +31,18 @@ def extractDates(tBody):
 
 def extractClassInfo(classDiv):
     classTime = classDiv.find('div', {'class': 'col-lg-4 col-md-7'}).text.strip()
-    
+    classClassroom = classDiv.find('div', {'class': 'col-lg-2 col-md-4'}).text.strip()
+
     # Extracts only the time from the string "Weekday hh:mm - hh:mm"
     timeRegex = re.compile(r'\d{2}:\d{2} - \d{2}:\d{2}')
     classTime = re.search(timeRegex, classTime).group()
+
 
     dateTbody = classDiv.find('tbody')
 
     classDates = extractDates(dateTbody)
 
-    return classTime, classDates
+    return classTime, classDates, classClassroom
 
 def isUserInClass(className, isFirstSurnameCategory):
     # Checks if the class is splitted by surname
@@ -75,7 +77,7 @@ def getClassSchedules(periodContent, isFirstSurnameCategory):
     for className, classDivs in courseDivs.items():
 
         for classDiv in classDivs:
-            classTime, classDates = extractClassInfo(classDiv)
+            classTime, classDates, classClassroom = extractClassInfo(classDiv)
             
             for classDate in classDates:
                 if classDate not in classSchedule:
@@ -83,11 +85,15 @@ def getClassSchedules(periodContent, isFirstSurnameCategory):
                 
                 # Removes the surname part from the class name
                 formattedClassName = re.split('cognomi', className, flags=re.IGNORECASE)[0].strip()
-                classSchedule[classDate][classTime] = formattedClassName
+                classSchedule[classDate][classTime] = {"Course" : formattedClassName, "Classroom" : classClassroom}
 
 
     # Sorts the dictionary by date (doesn't change the functionality, but it's easier to read)
     classSchedule = {date: event for date, event in sorted(classSchedule.items(), key=lambda item: datetime.strptime(item[0], '%d/%m/%Y'))}
+
+    # Sorts the dictionary by time (doesn't change the functionality, but it's easier to read)
+    for date, event in classSchedule.items():
+        classSchedule[date] = {time: event for time, event in sorted(event.items(), key=lambda item: datetime.strptime(item[0].split(' - ')[0], '%H:%M'))}
 
     return classSchedule
 
